@@ -8,28 +8,52 @@ Library             ./../libraries/Calculator.py
 Test Addition
     [Documentation]    Test the addition functionality of the calculator.
     [Tags]    calculator    addition
-    ${result}=    Add    5    3
+    [Setup]    Start Calculator
+    Set A    5
+    Set B    3
+    Add
+    ${result}=    Get Result
     Should Be Equal As Numbers    ${result}    8
+    [Teardown]    Stop Calculator
 
 Test Subtraction
     [Documentation]    Test the subtraction functionality of the calculator.
     [Tags]    calculator    subtraction
-    ${result}=    Subtract    10    4
-    Should Be Equal As Numbers    ${result}    6
+    [Setup]    Start Calculator
+    Set A    5
+    Set B    3
+    Subtract
+    ${result}=    Get Result
+    Should Be Equal As Numbers    ${result}    2
+    [Teardown]    Stop Calculator
 
 Test Multiplication
     [Documentation]    Test the multiplication functionality of the calculator.
     [Tags]    calculator    multiplication
-    ${result}=    Multiply    7    6
-    Should Be Equal As Numbers    ${result}    42
+    [Setup]    Start Calculator
+    Set A    5
+    Set B    3
+    Multiply
+    ${result}=    Get Result
+    Should Be Equal As Numbers    ${result}    15
+    [Teardown]    Stop Calculator
 
 Test Division
     [Documentation]    Test the division functionality of the calculator.
     [Tags]    calculator    division
-    ${result}=    Divide    20    5
-    Should Be Equal As Numbers    ${result}    4
+    [Setup]    Start Calculator
+    Set A    6
+    Set B    3
+    Divide
+    ${result}=    Get Result
+    Should Be Equal As Numbers    ${result}    2
+    [Teardown]    Stop Calculator
 
 Test Division By Zero
     [Documentation]    Test division by zero raises an error.
     [Tags]    calculator    division_by_zero
-    Run Keyword And Expect Error    ValueError: Division by zero is not allowed.    Divide    10    0
+    [Setup]    Start Calculator
+    Set A    6
+    Set B    0
+    Run Keyword And Expect Error    ValueError: Division by zero is not allowed.    Divide
+    [Teardown]    Stop Calculator
