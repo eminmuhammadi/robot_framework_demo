@@ -2,11 +2,12 @@ __pycache__
 .pytest_cache
 .venv
 assets
-report.html
-log.html
-output.xml
+*.html
+*.xml
 report/
 .DS_Store
+docs/
+results/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

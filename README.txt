@@ -33,6 +33,8 @@ $ pip install -r requirements.txt
 
 $ rfbrowser init
 
-$ robot -T --loglevel DEBUG -d report/ --variablefile ./data/contants.py --variablefile ./data/locators.py tests/example.robot
+$ robot -T --loglevel DEBUG -d report/ --variablefile ./data/contants.py --variablefile ./data/locators.py suites/example.robot
 
 $ ./.venv/Scripts/ride .
+
+$ python -m robot.libdoc ./libraries/Calculator.py ./docs/Calculator.html
