@@ -7,7 +7,7 @@ https://robotframework.org/robotframework/latest/RobotFrameworkUserGuide.html
 Extensions:
 - https://marketplace.visualstudio.com/items?itemName=d-biehl.robotcode
 - https://marketplace.visualstudio.com/items?itemName=tumit.vscode-rf-formatter
-- https://marketplace.visualstudio.com/items?itemName=robocorp.robotframework-lsp
+- (DEPRECATED !!) https://marketplace.visualstudio.com/items?itemName=robocorp.robotframework-lsp - Install with caution / Features may break
 
 
 BDD: https://docs.robotframework.org/docs/testcase_styles/bdd
@@ -33,7 +33,9 @@ $ pip install -r requirements.txt
 
 $ rfbrowser init
 
-$ robot -T --loglevel DEBUG -d report/ --variablefile ./data/contants.py --variablefile ./data/locators.py suites/example.robot
+$ robot -T --loglevel DEBUG -d results/ --include calculator suites/.
+$ robot -T --loglevel DEBUG -d results/ --include saucedemo suites/.
+$ robot -T --loglevel DEBUG -d results/ --include api suites/.
 
 $ ./.venv/Scripts/ride .
 

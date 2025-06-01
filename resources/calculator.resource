@@ -9,6 +9,8 @@ ${__RESULT__}       0
 *** Keywords ***
 The Calculator Is Running
     Start Calculator
+    ${state}=    Get State
+    Should Be Equal As Strings    ${state}    started
 
 I Add ${a} And ${b}
     Set A    ${a}

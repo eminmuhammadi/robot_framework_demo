@@ -18,6 +18,10 @@ class Calculator:
     def stop_calculator(self):
         self.state = "stopped"
         logger.info("Calculator stopped successfully.")
+
+    @keyword("Get State")
+    def get_state(self):
+        return self.state
     
     @keyword("Set A")
     def set_a(self, value):
@@ -31,7 +35,7 @@ class Calculator:
 
     @keyword("Get Result")
     def get_result(self):
-        return self.result
+        return float(self.result)
     
     @keyword("Add")
     def add(self):

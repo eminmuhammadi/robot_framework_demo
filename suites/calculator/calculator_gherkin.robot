@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation       Test suite for a simple calculator API.
 
-Resource          ./../resources/calculator.resource
+Resource            ./../../resources/calculator.resource
 
 
 *** Test Cases ***

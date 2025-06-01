@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation       Test suite for a simple calculator API.
 
-Library             ./../libraries/Calculator.py
+Library             ./../../libraries/Calculator.py
 
 
 *** Test Cases ***

@@ -9,8 +9,6 @@ Resource            ./../resources/example.resource
 
 Suite Setup         Log    Suite Started
 Suite Teardown      Log    Suite Teardown
-Test Setup          Log    Test Started
-Test Teardown       Log    Test Finished
 
 
 *** Variables ***
@@ -27,6 +25,7 @@ Test Case 1
     Should Not Be Empty    ${LOG_MESSAGE_1}
     Should Not Be Empty    ${LOG_MESSAGE_2}
     Log Extra Info    ${LOG_MESSAGE_1}
+    Log Additional Info    ${LOG_MESSAGE_2}
 
     [Teardown]    Log    Test Case 1 Teardown
 
