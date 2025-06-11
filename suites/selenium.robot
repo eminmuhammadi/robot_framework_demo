@@ -64,10 +64,6 @@ Visual User Should Be Able To See Products
 
 *** Keywords ***
 Open SauceDemo On Browser
-    Set Selenium Implicit Wait    5 seconds
-    Set Selenium Speed    3 seconds
-    Set Selenium Timeout    30 seconds
-
     ${prefs}=    Create Dictionary    credentials_enable_service=False    profile.password_manager_enabled=False
     ${chrome options}=    Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys, selenium.webdriver
     Call Method    ${chrome options}    add_argument    --disable-notifications
@@ -81,6 +77,10 @@ Open SauceDemo On Browser
     Create WebDriver    Chrome    options=${chrome options}
     Maximize Browser Window
     Go To    ${CONSTANTS_BASE_URL}
+
+    Set Selenium Implicit Wait    5 seconds
+    Set Selenium Speed    1 seconds
+    Set Selenium Timeout    30 seconds
 
 Log In As ${username}
     [Arguments]    ${password}=${SAUCEDEMO_PASSWORD}
