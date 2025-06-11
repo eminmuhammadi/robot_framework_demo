@@ -51,6 +51,9 @@ class Calculator:
 
     @keyword("Divide")
     def divide(self):
+        """
+            Perform a / b function
+        """
         if float(self.b) == 0:
             logger.error("Attempted to divide by zero.")
             raise ValueError("Division by zero is not allowed.")

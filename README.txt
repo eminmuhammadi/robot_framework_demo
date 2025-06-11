@@ -39,3 +39,5 @@ $ robot -T --loglevel DEBUG -d results/ --include api suites/.
 $ robot -T --loglevel DEBUG -d results/ --include saucedemo --include selenium suites/.
 
 $ python -m robot.libdoc ./libraries/Calculator.py ./docs/Calculator.html
+
+$ ./.venv/Scripts/ride .
