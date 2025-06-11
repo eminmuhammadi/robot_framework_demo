@@ -36,7 +36,6 @@ $ rfbrowser init
 $ robot -T --loglevel DEBUG -d results/ --include calculator suites/.
 $ robot -T --loglevel DEBUG -d results/ --include saucedemo suites/.
 $ robot -T --loglevel DEBUG -d results/ --include api suites/.
-
-$ ./.venv/Scripts/ride .
+$ robot -T --loglevel DEBUG -d results/ --include saucedemo --include selenium suites/.
 
 $ python -m robot.libdoc ./libraries/Calculator.py ./docs/Calculator.html

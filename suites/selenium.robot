@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation       SauceDemo Auth Test Suite
 
-Library             Browser
+Library             SeleniumLibrary
 Variables           ../data/contants.py
 Variables           ../data/locators.py
 
@@ -19,14 +19,14 @@ ${PRODUCTS_PAGE_URL}                    ${CONSTANTS_BASE_URL}/inventory.html
 
 *** Test Cases ***
 Standard Users Should Be Able To See Products
-    [Tags]    saucedemo    auth    standard_user
+    [Tags]    saucedemo    auth    standard_user    selenium
     [Setup]    Open SauceDemo On Browser
     Log In As ${SAUCEDEMO_STANDARD_USER}
     User Should Be Able To See Products
     [Teardown]    Close Browser
 
 Problem User Should Be Able To See Products
-    [Tags]    saucedemo    auth    problem_user
+    [Tags]    saucedemo    auth    problem_user    selenium
     [Setup]    Run Keywords    Open SauceDemo On Browser
     ...    AND    Log In As ${SAUCEDEMO_PROBLEM_USER}
     ...    AND    User Should Be Able To See Products
@@ -34,28 +34,28 @@ Problem User Should Be Able To See Products
     [Teardown]    Close Browser
 
 Locked Out User Should Not Be Able To See Products
-    [Tags]    saucedemo    auth    locked_out_user
+    [Tags]    saucedemo    auth    locked_out_user    selenium
     [Setup]    Open SauceDemo On Browser
     Log In As ${SAUCEDEMO_LOCKED_OUT_USER}
     Lockout Error Should Be Shown
     [Teardown]    Close Browser
 
 Performance Glitch User Should Be Able To See Products
-    [Tags]    saucedemo    auth    performance_glitch_user
+    [Tags]    saucedemo    auth    performance_glitch_user    selenium
     [Setup]    Open SauceDemo On Browser
     Log In As ${SAUCEDEMO_PERFORMANCE_GLITCH_USER}
     User Should Be Able To See Products
     [Teardown]    Close Browser
 
 Error User Should Be Able To See Products
-    [Tags]    saucedemo    auth    error_user
+    [Tags]    saucedemo    auth    error_user    selenium
     [Setup]    Open SauceDemo On Browser
     Log In As ${SAUCEDEMO_ERROR_USER}
     User Should Be Able To See Products
     [Teardown]    Close Browser
 
 Visual User Should Be Able To See Products
-    [Tags]    saucedemo    auth    visual_user
+    [Tags]    saucedemo    auth    visual_user    selenium
     [Setup]    Open SauceDemo On Browser
     Log In As ${SAUCEDEMO_VISUAL_USER}
     User Should Be Able To See Products
@@ -64,29 +64,38 @@ Visual User Should Be Able To See Products
 
 *** Keywords ***
 Open SauceDemo On Browser
-    New Browser    browser=chromium
-    ...    headless=False
-    ...    slowMo=1s
-    ...    timeout=30s
-    New Context    tracing=True
-    ...    viewport={"width": 1280, "height": 720}
-    ...    defaultBrowserType=chromium
-    New Page    ${CONSTANTS_START_URL}
+    Set Selenium Implicit Wait    5 seconds
+    Set Selenium Speed    3 seconds
+    Set Selenium Timeout    30 seconds
+
+    ${prefs}=    Create Dictionary    credentials_enable_service=False    profile.password_manager_enabled=False
+    ${chrome options}=    Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys, selenium.webdriver
+    Call Method    ${chrome options}    add_argument    --disable-notifications
+    Call Method    ${chrome options}    add_argument    --disable-infobars
+    Call Method    ${chrome options}    add_argument    --disable-extensions
+    Call Method    ${chrome options}    add_argument    --no-default-browser-check
+    Call Method    ${chrome options}    add_argument    --disable-popup-blocking
+    Call Method    ${chrome options}    add_argument    --disable-save-password-bubble
+    Call Method    ${chrome options}    add_experimental_option    prefs    ${prefs}
+
+    Create WebDriver    Chrome    options=${chrome options}
+    Maximize Browser Window
+    Go To    ${CONSTANTS_BASE_URL}
 
 Log In As ${username}
     [Arguments]    ${password}=${SAUCEDEMO_PASSWORD}
-    Fill Text    css=${LOCATORS_AUTH_USERNAME}    ${username}
-    Fill Text    css=${LOCATORS_AUTH_PASSWORD}    ${password}
-    Click    css=${LOCATORS_AUTH_LOGIN_BTN}
+    Input Text    css:${LOCATORS_AUTH_USERNAME}    ${username}
+    Input Text    css:${LOCATORS_AUTH_PASSWORD}    ${password}
+    Click Button    css:${LOCATORS_AUTH_LOGIN_BTN}
 
 User Should Be Able To See Products
-    Wait For Elements State    css=${LOCATORS_PRODUCTS_PAGE_TITLE}    visible    5000
-    ${PRODUCTS_TITLE}=    Get Text    css=${LOCATORS_PRODUCTS_PAGE_TITLE}
+    Wait Until Element Is Visible    css:${LOCATORS_PRODUCTS_PAGE_TITLE}    timeout=5 seconds
+    ${PRODUCTS_TITLE}=    Get Text    css:${LOCATORS_PRODUCTS_PAGE_TITLE}
     Should Be Equal As Strings    ${PRODUCTS_TITLE}    ${CONSTANTS_PRODUCTS_PAGE_TITLE}
-    ${URL}=    Get Url
+    ${URL}=    Get Location
     Should Be Equal As Strings    ${URL}    ${PRODUCTS_PAGE_URL}
 
 Lockout Error Should Be Shown
-    Wait For Elements State    css=${LOCATORS_AUTH_ERROR_MESSAGE}    visible    5000
-    ${ERROR_MESSAGE}=    Get Text    css=${LOCATORS_AUTH_ERROR_MESSAGE}
+    Wait Until Element Is Visible    css:${LOCATORS_AUTH_ERROR_MESSAGE}    timeout=5 seconds
+    ${ERROR_MESSAGE}=    Get Text    css:${LOCATORS_AUTH_ERROR_MESSAGE}
     Should Be Equal As Strings    ${ERROR_MESSAGE}    ${CONSTANTS_AUTH_ERROR_MESSAGE}
