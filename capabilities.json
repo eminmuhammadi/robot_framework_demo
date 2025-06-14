@@ -1,0 +1,11 @@
+{
+  "platformName": "Android",
+  "appium:platformVersion": "16.0",
+  "appium:deviceName": "Medium_Phone_API_36.0",
+  "appium:automationName": "UiAutomator2",
+  "appium:appPackage": "com.android.settings",
+  "appium:appActivity": ".Settings",
+  "appium:avd": "Medium_Phone_API_36.0",
+  "appium:avdLaunchTimeout": 200000,
+  "appium:autoGrantPermissions": true
+}
