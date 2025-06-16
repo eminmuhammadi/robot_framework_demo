@@ -18,7 +18,7 @@ ${AUTO_GRANT}           true
 *** Test Cases ***
 Open Android Settings App
     [Documentation]    Open Android Settings app and check if loaded
-    Open Application    ${REMOTE_URL}
+    [Setup]    Open Application    ${REMOTE_URL}
     ...    platformName=${PLATFORM_NAME}
     ...    platformVersion=${PLATFORM_VERSION}
     ...    deviceName=${DEVICE_NAME}
@@ -30,4 +30,4 @@ Open Android Settings App
     ...    autoGrantPermissions=${AUTO_GRANT}
     Sleep    5s
     Page Should Contain Element    //*[@text='Network & internet']
-    Close Application
+    [Teardown]    Close Application
